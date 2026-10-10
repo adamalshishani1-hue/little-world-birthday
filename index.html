@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff5f2">
+  <title>عالم صغير إلك ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ★ Splash Screen -->
+  <div class="splash" id="splash">
+    <div class="splash-half splash-left"></div>
+    <div class="splash-half splash-right"></div>
+    <div class="splash-content">
+      <p class="splash-eyebrow">إلى الشخص الأغلى على ئلبي</p>
+      <h1 class="splash-title">كل عام وإنتِ بخير لولوتي</h1>
+      <div class="splash-heart">♡</div>
+    </div>
+  </div>
+
+  <!-- ★ Particle Canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- ★ Noise texture overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- ★ Animated ambient blobs -->
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
+
+  <!-- ★ Custom cursor (desktop) -->
+  <div class="custom-cursor" id="customCursor">♡</div>
+
+  <!-- Navigation (glassmorphism) -->
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#home">إلك، يا دب الحب <span>♡</span></a>
+    <nav aria-label="التنقل">
+      <a href="#letter">الرسالة</a>
+      <a href="#memories">ذكرياتنا</a>
+      <a href="#story">قصتنا</a>
+    </nav>
+    <div style="position: relative; display: flex; align-items: center;">
+      <button class="icon-button" id="musicToggle" aria-label="تشغيل الموسيقى" title="تشغيل الموسيقى">🎵</button>
+      <div id="cuteArrow" style="position: absolute; top: calc(100% + 12px); left: 0; /* aligned left to avoid overflow */ white-space: nowrap; font-family: 'Cairo', sans-serif; font-size: 0.75rem; font-weight: 600; color: #b65e73; pointer-events: none; animation: cuteBounce 1.5s infinite ease-in-out; text-align: center; background: #fffaf5; padding: 4px 12px; border-radius: 20px; box-shadow: 0 4px 12px rgba(182, 94, 115, 0.15); border: 1px solid #f5e8ea;">
+        <span style="display: block; font-size: 1.2rem; margin-bottom: -4px; line-height: 1;">↑</span>
+        شغلي الغنية من هون بالأول
+      </div>
+    </div>
+  </header>
+  <audio id="bgMusic" src="bg_music.mp3" loop preload="auto"></audio>
+
+  <main>
+    <!-- ═══ HERO ═══ -->
+    <section class="hero section" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow hero-stagger" data-delay="0">إلى الشخص الأغلى على ئلبي</p>
+        <h1 class="hero-stagger" data-delay="1">
+          <span id="typewriter"></span><span class="typewriter-cursor">|</span>
+        </h1>
+        <p class="hero-subtitle hero-stagger" data-delay="2">يمكن في بيننا مسافات، بس في أشياء ما بتعرف تبعد… متل مكانك بئلبي.</p>
+        <button class="primary-button magnetic-btn hero-stagger" data-delay="3" id="openLetter">
+          <span>✉</span> افتحي رسالتك يحب
+          <span class="btn-glow"></span>
+        </button>
+        <p class="tiny-note hero-stagger" data-delay="4">حضّرتلك شغلة صغنونة متلك… من ئلبي لئلبك</p>
+      </div>
+      <div class="hero-art" id="heroArt" aria-label="بطاقة عيد ميلاد مزينة بالزهور">
+        <div class="sun parallax-el" data-speed="0.03"></div>
+        <div class="hill hill-back parallax-el" data-speed="0.01"></div>
+        <div class="hill hill-front parallax-el" data-speed="0.02"></div>
+        <div class="flower flower-a parallax-el" data-speed="0.04">✿</div>
+        <div class="flower flower-b parallax-el" data-speed="0.035">✿</div>
+        <div class="flower flower-c parallax-el" data-speed="0.025">✿</div>
+        <div class="hero-polaroid parallax-el" id="magicPolaroid" data-speed="0.045">
+          <div class="magic-inner">
+            <div class="magic-front">
+              <span style="font-family: 'Amiri', serif; font-size: 1.5rem; color: #fff;">اضغطي هون يحب 🌸</span>
+            </div>
+            <div class="magic-back">
+              <img src="memory.jpg" style="object-fit: cover; width: 100%; aspect-ratio: 1.2; height: auto; border-radius: 2px;">
+              <span style="font-family: 'Amiri', serif; display: block; text-align: center; margin-top: 8px; font-size: clamp(0.9rem, 4vw, 1.2rem);">ذكرى بحبها ♡</span>
+            </div>
+          </div>
+        </div>
+        <span class="floating-star star-a parallax-el" data-speed="0.05">✦</span>
+        <span class="floating-star star-b parallax-el" data-speed="0.04">✧</span>
+      </div>
+      <a class="scroll-hint" href="#letter" style="display: flex; align-items: center; gap: 8px; text-decoration: none; flex-direction: row;">
+        <span style="margin: 0; color: var(--muted); animation: none; font-size: 1.1rem;">انزلي شوي كمون يي</span>
+        <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
+          <div style="position: absolute; top: -22px; font-size: 1.1rem; color: var(--rose); animation: floatHeart 2.5s ease-in-out infinite alternate;">♡</div>
+          <div style="font-size: 1.2rem; color: var(--rose); animation: scrollBounce 2s ease-in-out infinite;">↓</div>
+        </div>
+      </a>
+    </section>
+
+    <!-- ★ Section Divider -->
+    <div class="section-divider divider-to-letter">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,40 C320,110 920,0 1440,70 L1440,120 L0,120 Z"/></svg>
+    </div>
+
+    <!-- ═══ LETTER ═══ -->
+    <section class="section letter-section" id="letter">
+      <div class="section-heading reveal">
+        <p class="eyebrow">من ئلبي إلك</p>
+        <h2>في رسالة ناطرتك توت</h2>
+        <p>اضغطي على الظرف، وخدي وقتك بالقراءة.</p>
+      </div>
+      <div class="envelope-scene reveal">
+        <button class="envelope-wrap" id="envelope" aria-expanded="false" aria-label="افتحي الرسالة">
+          <span class="envelope-sprig">✿</span>
+          <span class="envelope-back"></span>
+          <span class="envelope-flap"></span>
+          <span class="letter-paper">
+            <span class="letter-title">رسالة إلك</span>
+            <span class="letter-mini">في كلام ما بكفيه ظرف…</span>
+          </span>
+          <span class="envelope-front"></span>
+          <span class="wax-seal">♡</span>
+        </button>
+      </div>
+      <article class="letter-content hidden" id="letterContent">
+        <p class="letter-greeting">إلى حبيبتي،</p>
+        <p>كل عام وإنتِ بخير يا أجمل صدفة وأصدق دعوة وأحلى جزء من أيامي.</p>
+        <p>يمكن اليوم مش قادر أكون حدك وأعطيكي هديتك بإيدي، بس حبيت أعمل شي يحمل جزء مني ويوصلك مهما كانت المسافة.</p>
+        <p>بتمنالك سنة مليانة راحة وفرح ونجاحات، وأيام تضحكي فيها من قلبك. بتمنى تلاقي فيها كل الأشياء الحلوة اللي بتستحقيها، وتضلي شايفة قديش وجودك بالدنيا بيفرق.</p>
+        <p>شكرًا على كل ذكرى، وكل حديث، وكل مرة وقفتي حدي فيها, وكل لحظة خلت المسافة أهون. هاي الصفحة بسيطة، بس كل تفصيلة فيها اخترتها وأنا بفكر فيك يروحي.</p>
+        <p class="signature">كل عام وإنتِ قريبة من ئلبي يروح ئلبي،<br>مود الك… دايمًا ♡</p>
+        <p class="edit-tip">
+      </article>
+    </section>
+
+    <!-- ★ Section Divider -->
+    <div class="section-divider divider-to-memories">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,80 C480,0 960,120 1440,30 L1440,120 L0,120 Z"/></svg>
+    </div>
+
+    <!-- ═══ MEMORIES ═══ -->
+    <section class="section" id="memories">
+      <div class="section-heading reveal">
+        <p class="eyebrow">لحظات مخبيها </p>
+        <h2>ألبوم ذكرياتنا</h2>
+        <p>كل صورة وراها قصة صغيرة.</p>
+      </div>
+      <div class="memory-grid" id="memoryGrid">
+        <article class="memory-card reveal" data-tilt>
+          <div class="memory-photo"><img src="first_memory.jpg" alt="أول ذكرى"></div>
+          <p class="memory-caption">أول ذكرى <span>♡</span></p>
+          <small>اللحظة اللي بعدها صار إلها معنى مختلف.</small>
+        </article>
+        <article class="memory-card reveal" data-tilt>
+          <div class="memory-photo"><img src="funny_laugh.jpg" alt="ضحكة ما بنساها"></div>
+          <p class="memory-caption">ضحكة ما بنساها <span>♡</span></p>
+          <small>في تفاصيل صغيرة بتضل معنا كثير.</small>
+        </article>
+        <article class="memory-card reveal" data-tilt>
+          <div class="memory-photo"><img src="best_days.jpg" alt="من أحلى الأيام"></div>
+          <p class="memory-caption">من أحلى الأيام <span>♡</span></p>
+          <small>وإن شاء الله الجاي أحلى.</small>
+        </article>
+      </div>
+      <p class="section-footnote">
+    </section>
+
+    <!-- ★ Section Divider -->
+    <div class="section-divider divider-to-story">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,40 C320,110 920,0 1440,70 L1440,120 L0,120 Z"/></svg>
+    </div>
+
+    <!-- ═══ STORY / TIMELINE ═══ -->
+    <section class="section story-section" id="story">
+      <div class="section-heading reveal">
+        <p class="eyebrow">خطوات صغيرة، حكاية كبيرة</p>
+        <h2>حكايتنا لليوم </h2>
+        <p> </p>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="timeline-line" id="timelineLine"></div>
+        <article class="timeline-item reveal">
+          <span class="timeline-dot heartbeat">♡</span>
+          <div>
+            <small>البداية 2026/2/7</small>
+            <h3>أول مرة حكينا</h3>
+            <p>من حديث بسيط، بلشت حكاية صارت تعنيلنا كثير.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="timeline-dot">✦</span>
+          <div>
+            <small>ذكرى مميزة 2026/6/6</small>
+            <h3>اليوم الي اعترفتلك فيه بحبي الك</h3>
+            <p>أهم خطوة بحياتي, ولو ينعاد فيي الزمن بختارك كل مرة</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="timeline-dot">∞</span>
+          <div>
+            <small>والجاي أحلى</small>
+            <h3>في ذكريات لسه ما صارت</h3>
+            <p>لسه في أماكن بدنا نزورها، وصور بدنا ناخدها، وأيام بدنا نعيشها سوا.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══ VOICE ═══ -->
+    <section class="section voice-section">
+      <div class="voice-card reveal">
+        <div class="voice-icon">
+          <span class="voice-pulse"></span>
+          ♫
+        </div>
+        <div class="voice-copy">
+          <p class="eyebrow">مفاجأة صغيرة</p>
+          <h2>اسمعي صوت مودي</h2>
+          <audio controls id="voicePlayer" preload="metadata">
+            <source src="20261010_182208.aac" type="audio/aac">
+            متصفحك لا يدعم تشغيل الصوت.
+          </audio>
+          <small id="audioHint" style="display: none;">إذا ما أضفت التسجيل، رح يظل مكانه جاهز لوقت ما تحب.</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EXTRAS (3D Flip Cards) ═══ -->
+    <section class="section extras-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">افتحي اللي بتحبيه</p>
+        <h2>أشياء صغيرة إلك</h2>
+        <p>اختاري بطاقة كرمال تكشفلك رسالة.</p>
+      </div>
+      <div class="extras-grid">
+        <div class="extra-card reveal" tabindex="0" role="button" aria-label="لما يكون يومك صعب">
+          <div class="extra-card-inner">
+            <div class="extra-card-front">♡<span>لما يكون يومك صعب</span></div>
+            <div class="extra-card-back"><p>لما يكون يومك طويل، تذكّري إنك مش مطالبة تكوني قوية كل الوقت. خدي نفس، وكوني لطيفة مع حالك وتعي عندي , بعطيكي بوءات.</p></div>
+          </div>
+        </div>
+        <div class="extra-card reveal" tabindex="0" role="button" aria-label="أمنيتي إلك">
+          <div class="extra-card-inner">
+            <div class="extra-card-front">✧<span>أمنيتي إلك</span></div>
+            <div class="extra-card-back"><p>بتمنالك تصيري مرتي أول شي , وبتمنالك الخير والبركة والتوفيق دوما يروح روحي</p></div>
+          </div>
+        </div>
+        <div class="extra-card reveal" tabindex="0" role="button" aria-label="مكان نفسي نروحه معك">
+          <div class="extra-card-inner">
+            <div class="extra-card-front">⌁<span>مكان نفسي أروحه معك</span></div>
+            <div class="extra-card-back"><p>في أماكن كثير نفسي نزورها مع بعض، بس الأهم عندي انه نصنع ذكرى حلوة وين ما كنا.</p></div>
+          </div>
+        </div>
+        <div class="extra-card reveal" tabindex="0" role="button" aria-label="تعليمات عيد الميلاد">
+          <div class="extra-card-inner">
+            <div class="extra-card-front">♡<span>تعليمات عيد الميلاد</span></div>
+            <div class="extra-card-back"><p>إذا وصلتي لهون، هاي إشارة إنك لازم تاخدي قطعة كيك أو أي إشي بتحبيه اليوم. هاي أوامر عيد الميلاد!</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="surprise-message hidden" id="surpriseMessage" role="status"></div>
+    </section>
+
+    <!-- ═══ FINAL ═══ -->
+    <section class="final-section section">
+      <div class="final-sparkle reveal">✦</div>
+      <p class="eyebrow reveal">قبل ما تروحي</p>
+      <h2 class="reveal">المسافة بتفصل الأماكن،<br><em>مش المشاعر الحلوة.</em></h2>
+      <p class="reveal">عيد ميلاد سعيد يا أحلى حكاية. وإن شاء الله السنة الجاية نحتفل سوا.</p>
+      <button class="primary-button magnetic-btn reveal" id="finalButton">اضغطي هون أخوي ♡</button>
+      <p class="final-hidden hidden" id="finalHidden">أحلى جزء بهاي الهدية هو إنك إنتِ اللي عم تقرأيها. بحب أشوفك مبسوطة دايمًا لولوش. ♡</p>
+    </section>
+  </main>
+
+  <footer>انعملت بحب، خصيصًا لروح الدب <span>♡</span></footer>
+  <div class="toast hidden" id="toast" role="status">تم فتح الرسالة ♡</div>
+
+  <!-- ★ Confetti container -->
+  <div id="confettiContainer" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
