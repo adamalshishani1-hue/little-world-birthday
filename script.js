@@ -443,22 +443,68 @@ if (musicBtn && bgMusic) {
 // 15. VOICE PLAYER
 // ============================================================
 const voicePlayer = $("#voicePlayer");
+
+function fadeAudio(audio, targetVolume, duration) {
+  if (!audio) return;
+  const steps = 20;
+  const stepTime = duration / steps;
+  let currentVol = audio.volume;
+  const volumeStep = (targetVolume - currentVol) / steps;
+  
+  if (audio.fadeInterval) clearInterval(audio.fadeInterval);
+  
+  audio.fadeInterval = setInterval(() => {
+    currentVol += volumeStep;
+    if ((volumeStep > 0 && currentVol >= targetVolume) || (volumeStep < 0 && currentVol <= targetVolume)) {
+      audio.volume = targetVolume;
+      clearInterval(audio.fadeInterval);
+    } else {
+      audio.volume = Math.max(0, Math.min(1, currentVol));
+    }
+  }, stepTime);
+}
+
 if (voicePlayer) {
+  // Boost voice recording volume using Web Audio API
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) {
+      let audioCtx;
+      let gainNode;
+      let track;
+      
+      voicePlayer.addEventListener('play', () => {
+        if (!audioCtx) {
+          audioCtx = new AudioContext();
+          track = audioCtx.createMediaElementSource(voicePlayer);
+          gainNode = audioCtx.createGain();
+          gainNode.gain.value = 3.5; // Boost volume by 3.5x
+          track.connect(gainNode).connect(audioCtx.destination);
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      });
+    }
+  } catch (e) {
+    console.log("Web Audio API not supported", e);
+  }
+
   voicePlayer.addEventListener("play", () => {
-    if (bgMusic && !bgMusic.paused) {
-      bgMusic.volume = 0.03;
+    if (typeof bgMusic !== 'undefined' && bgMusic && !bgMusic.paused) {
+      fadeAudio(bgMusic, 0.03, 1500); // fade down over 1.5s
     }
   });
   
   voicePlayer.addEventListener("pause", () => {
-    if (bgMusic) {
-      bgMusic.volume = 1.0;
+    if (typeof bgMusic !== 'undefined' && bgMusic) {
+      fadeAudio(bgMusic, 1.0, 1500); // fade up over 1.5s
     }
   });
   
   voicePlayer.addEventListener("ended", () => {
-    if (bgMusic) {
-      bgMusic.volume = 1.0;
+    if (typeof bgMusic !== 'undefined' && bgMusic) {
+      fadeAudio(bgMusic, 1.0, 1500);
     }
   });
 
